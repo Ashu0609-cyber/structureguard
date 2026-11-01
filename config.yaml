@@ -1,0 +1,93 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# StructureGuard — config.yaml
+# Reproducible experiment configuration.
+#
+# All scripts must load settings from this file.
+# Never hard-code paths, seeds or hyperparameters in experiment scripts.
+# ──────────────────────────────────────────────────────────────────────────────
+
+# ── Reproducibility ───────────────────────────────────────────────────────────
+seed: 42
+
+# ── Project paths ─────────────────────────────────────────────────────────────
+paths:
+  data_raw:        data/raw
+  data_processed:  data/processed
+  data_splits:     data/splits
+  checkpoints:     checkpoints
+  results:         results
+  logs:            results/logs
+
+# ── Dataset ───────────────────────────────────────────────────────────────────
+dataset:
+  name: BioSR                         # Dataset identifier
+  structure_type: F-actin             # Biological structure to use initially
+                                      # Options: F-actin, microtubules, CCPs, ER
+  scale_factor: 4                     # Super-resolution upscaling factor (LR → HR)
+  patch_size: 128                     # Training patch size (pixels, HR space)
+  overlap: 32                         # Patch overlap for inference tiling
+  train_split: 0.80                   # Proportion of data used for training
+  val_split:   0.10                   # Proportion used for validation
+  test_split:  0.10                   # Proportion held out for final evaluation
+  num_workers: 4                      # DataLoader worker processes
+  pin_memory: true                    # Pin memory for GPU transfer
+
+# ── Image settings ────────────────────────────────────────────────────────────
+image:
+  channels: 1                         # Grayscale fluorescence microscopy
+  normalize_mean: 0.5                 # Normalization mean (single channel)
+  normalize_std:  0.5                 # Normalization std (single channel)
+  dtype: float32
+
+# ── Super-resolution model ────────────────────────────────────────────────────
+# Architecture and hyperparameters will be added when a model is approved.
+# This section is a placeholder to establish the configuration contract.
+model:
+  name: null                          # To be set when architecture is chosen
+  scale_factor: 4                     # Must match dataset.scale_factor
+  in_channels: 1
+  out_channels: 1
+
+# ── Training ──────────────────────────────────────────────────────────────────
+# Training runs on Google Colab (GPU). Local training is for debugging only.
+training:
+  epochs: 100
+  batch_size: 16
+  learning_rate: 1.0e-4
+  lr_scheduler: cosine                # cosine | step | plateau
+  lr_warmup_epochs: 5
+  weight_decay: 1.0e-5
+  gradient_clip_norm: 1.0
+  save_every_n_epochs: 10            # Checkpoint saving frequency
+  early_stopping_patience: 20        # Epochs without val improvement before stopping
+  loss: l1                            # l1 | mse | ssim | combined
+
+# ── Uncertainty estimation ────────────────────────────────────────────────────
+# Specific methods (e.g. MC Dropout, Deep Ensembles) are research candidates
+# to be chosen and validated experimentally. No method is fixed at this stage.
+uncertainty:
+  method: null                        # To be set when a method is approved
+  num_samples: null                   # Inference samples (method-dependent)
+
+# ── Evaluation ────────────────────────────────────────────────────────────────
+evaluation:
+  metrics:
+    - psnr                            # Peak Signal-to-Noise Ratio
+    - ssim                            # Structural Similarity Index
+  uncertainty_calibration: true       # Compute calibration curves when uncertainty map available
+  save_sr_images: true                # Save SR output images to results/
+  save_uncertainty_maps: true         # Save uncertainty maps to results/
+  save_overlays: true                 # Save uncertainty-overlaid SR images to results/
+
+# ── Visualization ─────────────────────────────────────────────────────────────
+visualization:
+  uncertainty_colormap: hot           # Matplotlib colormap for uncertainty heatmaps
+  overlay_alpha: 0.5                  # Transparency of uncertainty overlay on SR image
+  figure_dpi: 150
+  figure_format: png
+
+# ── Streamlit app ─────────────────────────────────────────────────────────────
+app:
+  title: StructureGuard
+  default_scale_factor: 4
+  max_upload_size_mb: 50

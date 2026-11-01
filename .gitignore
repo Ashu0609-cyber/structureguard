@@ -1,0 +1,115 @@
+# ──────────────────────────────────────────────
+# StructureGuard — .gitignore
+# ──────────────────────────────────────────────
+
+# ── Virtual environments ──────────────────────
+struc/
+venv/
+.venv/
+env/
+ENV/
+
+# ── Python bytecode ───────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# ── Distribution / packaging ──────────────────
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+wheels/
+
+# ── Datasets (large binary files) ─────────────
+data/raw/*
+data/processed/*
+data/splits/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/splits/.gitkeep
+
+# ── Model checkpoints ─────────────────────────
+checkpoints/*
+!checkpoints/.gitkeep
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.hdf5
+*.safetensors
+
+# ── Generated results ─────────────────────────
+results/*
+!results/.gitkeep
+
+# ── Jupyter / IPython ─────────────────────────
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+# Keep notebooks themselves tracked
+# *.ipynb  <-- intentionally NOT ignored
+
+# ── Environment variables / secrets ───────────
+.env
+.env.*
+*.env
+secrets.yaml
+secrets.yml
+
+# ── IDE and editor files ──────────────────────
+# VS Code
+.vscode/
+# JetBrains
+.idea/
+*.iml
+# Antigravity / Gemini IDE
+.gemini/
+.agy/
+# Vim / Emacs swap files
+*.swp
+*.swo
+*~
+
+# ── Operating system files ────────────────────
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ── Logs and temporary files ──────────────────
+*.log
+logs/
+*.tmp
+*.temp
+tmp/
+temp/
+
+# ── Testing and coverage ──────────────────────
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+
+# ── MyPy / type checking ──────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ── Profiling outputs ─────────────────────────
+*.prof
+*.lprof
+
+# ── Matplotlib figure cache ───────────────────
+.matplotlib/
+
+# ── Streamlit cache ───────────────────────────
+.streamlit/

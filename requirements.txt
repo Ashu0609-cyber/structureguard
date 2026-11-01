@@ -1,0 +1,57 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# StructureGuard — requirements.txt
+# Essential initial dependencies for local development.
+#
+# DO NOT install without explicit approval.
+# Install with: pip install -r requirements.txt
+#
+# GPU note: PyTorch is listed here as the CPU-only index for local development.
+# For GPU training on Google Colab, the appropriate CUDA-enabled build is
+# installed separately. See experiments/training/ for Colab setup instructions.
+# ──────────────────────────────────────────────────────────────────────────────
+
+# ── Deep learning ─────────────────────────────
+# CPU build for local development (Windows, Python 3.11)
+# GPU builds are handled separately in Colab training notebooks.
+torch==2.3.1
+torchvision==0.18.1
+
+# ── Image processing ──────────────────────────
+numpy==1.26.4
+opencv-python==4.10.0.84
+scikit-image==0.24.0
+Pillow==10.4.0
+
+# ── Visualization ─────────────────────────────
+matplotlib==3.9.2
+plotly==5.24.1
+
+# ── Streamlit interface ───────────────────────
+streamlit==1.38.0
+
+# ── Configuration management ──────────────────
+PyYAML==6.0.2
+
+# ── Scientific computing ──────────────────────
+scipy==1.14.1
+
+# ── Experiment tracking and utilities ─────────
+tqdm==4.66.5
+
+# ── Testing ───────────────────────────────────
+pytest==8.3.3
+pytest-cov==5.0.0
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Packages intentionally NOT included at this stage:
+#
+# Advanced uncertainty methods (MC Dropout helpers, Deep Ensemble utilities,
+# conformal prediction libraries) — these are research candidates to be
+# evaluated experimentally. They will be added when a specific method is
+# approved for implementation.
+#
+# LPIPS and other perceptual metrics — to be added during the evaluation phase.
+#
+# Data download utilities (wget, gdown, etc.) — datasets are acquired manually
+# or via an approved script; never downloaded automatically.
+# ──────────────────────────────────────────────────────────────────────────────
